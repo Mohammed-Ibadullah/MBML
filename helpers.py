@@ -99,10 +99,93 @@ def plot1(merged_df_DK2):
 
 
 
+# def plot2(merged_df_DK2):
+#     import numpy as np
+
+#     plt.figure(figsize=(12, 10))
+
+#     # Set seaborn style
+#     sns.set_style("whitegrid")
+
+#     # Define hours of the day
+#     hours = np.arange(1, 25)
+
+#     # Calculate average energy and standard deviation for each hour
+#     wind_avg = []
+#     wind_std = []
+#     solar_avg = []
+#     solar_std = []
+#     power_avg = []
+#     power_std = []
+#     consumption_avg = []
+#     consumption_std = []
+
+#     for hour in hours:
+#         wind_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['Wind']
+#         solar_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['Solar']
+#         power_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['Power']
+#         consumption_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['GrossConsumptionMWh']
+        
+#         wind_avg.append(wind_hourly.mean())
+#         wind_std.append(wind_hourly.std())
+        
+#         solar_avg.append(solar_hourly.mean())
+#         solar_std.append(solar_hourly.std())
+        
+#         power_avg.append(power_hourly.mean())
+#         power_std.append(power_hourly.std())
+        
+#         consumption_avg.append(consumption_hourly.mean())
+#         consumption_std.append(consumption_hourly.std())
+
+#     # Plot Wind
+#     plt.subplot(4, 1, 1)
+#     plt.plot(hours, wind_avg, color='blue', label='Average Wind Energy')
+#     plt.fill_between(hours, np.array(wind_avg) - np.array(wind_std), np.array(wind_avg) + np.array(wind_std), color='lightblue', alpha=0.5, label='Deviation')
+#     plt.title('Hourly Development of Wind Energy')
+#     plt.xlabel('Hour of the Day')
+#     plt.ylabel('Wind Energy (MWh)')
+#     plt.legend()
+
+#     # Plot Solar
+#     plt.subplot(4, 1, 2)
+#     plt.plot(hours, solar_avg, color='orange', label='Average Solar Energy')
+#     plt.fill_between(hours, np.array(solar_avg) - np.array(solar_std), np.array(solar_avg) + np.array(solar_std), color='lightsalmon', alpha=0.5, label='Deviation')
+#     plt.title('Hourly Development of Solar Energy')
+#     plt.xlabel('Hour of the Day')
+#     plt.ylabel('Solar Energy (MWh)')
+#     plt.legend()
+
+#     # Plot Power
+#     plt.subplot(4, 1, 3)
+#     plt.plot(hours, power_avg, color='green', label='Average Power')
+#     plt.fill_between(hours, np.array(power_avg) - np.array(power_std), np.array(power_avg) + np.array(power_std), color='lightgreen', alpha=0.5, label='Deviation')
+#     plt.title('Hourly Development of Power')
+#     plt.xlabel('Hour of the Day')
+#     plt.ylabel('Power (MWh)')
+#     plt.legend()
+
+#     # Plot Gross Consumption
+#     plt.subplot(4, 1, 4)
+#     plt.plot(hours, consumption_avg, color='red', label='Average Gross Consumption')
+#     plt.fill_between(hours, np.array(consumption_avg) - np.array(consumption_std), np.array(consumption_avg) + np.array(consumption_std), color='lightcoral', alpha=0.5, label='Deviation')
+#     plt.title('Hourly Development of Gross Consumption')
+#     plt.xlabel('Hour of the Day')
+#     plt.ylabel('Gross Consumption (MWh)')
+#     plt.legend()
+
+#     # Adjust layout
+#     plt.tight_layout()
+
+#     # Show plot
+#     plt.show()
+
 def plot2(merged_df_DK2):
     import numpy as np
+    import matplotlib.pyplot as plt
+    import seaborn as sns
 
-    plt.figure(figsize=(12, 10))
+    plt.figure(figsize=(12, 12))
 
     # Set seaborn style
     sns.set_style("whitegrid")
@@ -119,12 +202,15 @@ def plot2(merged_df_DK2):
     power_std = []
     consumption_avg = []
     consumption_std = []
+    spot_price_avg = []
+    spot_price_std = []
 
     for hour in hours:
         wind_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['Wind']
         solar_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['Solar']
         power_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['Power']
         consumption_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['GrossConsumptionMWh']
+        spot_price_hourly = merged_df_DK2[merged_df_DK2['HourDK'].dt.hour == hour]['SpotPriceDKK']
         
         wind_avg.append(wind_hourly.mean())
         wind_std.append(wind_hourly.std())
@@ -137,9 +223,12 @@ def plot2(merged_df_DK2):
         
         consumption_avg.append(consumption_hourly.mean())
         consumption_std.append(consumption_hourly.std())
+        
+        spot_price_avg.append(spot_price_hourly.mean())
+        spot_price_std.append(spot_price_hourly.std())
 
     # Plot Wind
-    plt.subplot(4, 1, 1)
+    plt.subplot(5, 1, 1)
     plt.plot(hours, wind_avg, color='blue', label='Average Wind Energy')
     plt.fill_between(hours, np.array(wind_avg) - np.array(wind_std), np.array(wind_avg) + np.array(wind_std), color='lightblue', alpha=0.5, label='Deviation')
     plt.title('Hourly Development of Wind Energy')
@@ -148,7 +237,7 @@ def plot2(merged_df_DK2):
     plt.legend()
 
     # Plot Solar
-    plt.subplot(4, 1, 2)
+    plt.subplot(5, 1, 2)
     plt.plot(hours, solar_avg, color='orange', label='Average Solar Energy')
     plt.fill_between(hours, np.array(solar_avg) - np.array(solar_std), np.array(solar_avg) + np.array(solar_std), color='lightsalmon', alpha=0.5, label='Deviation')
     plt.title('Hourly Development of Solar Energy')
@@ -157,7 +246,7 @@ def plot2(merged_df_DK2):
     plt.legend()
 
     # Plot Power
-    plt.subplot(4, 1, 3)
+    plt.subplot(5, 1, 3)
     plt.plot(hours, power_avg, color='green', label='Average Power')
     plt.fill_between(hours, np.array(power_avg) - np.array(power_std), np.array(power_avg) + np.array(power_std), color='lightgreen', alpha=0.5, label='Deviation')
     plt.title('Hourly Development of Power')
@@ -166,12 +255,21 @@ def plot2(merged_df_DK2):
     plt.legend()
 
     # Plot Gross Consumption
-    plt.subplot(4, 1, 4)
+    plt.subplot(5, 1, 4)
     plt.plot(hours, consumption_avg, color='red', label='Average Gross Consumption')
     plt.fill_between(hours, np.array(consumption_avg) - np.array(consumption_std), np.array(consumption_avg) + np.array(consumption_std), color='lightcoral', alpha=0.5, label='Deviation')
     plt.title('Hourly Development of Gross Consumption')
     plt.xlabel('Hour of the Day')
     plt.ylabel('Gross Consumption (MWh)')
+    plt.legend()
+
+    # Plot Spot Price
+    plt.subplot(5, 1, 5)
+    plt.plot(hours, spot_price_avg, color='purple', label='Average Spot Price (DKK)')
+    plt.fill_between(hours, np.array(spot_price_avg) - np.array(spot_price_std), np.array(spot_price_avg) + np.array(spot_price_std), color='violet', alpha=0.5, label='Deviation')
+    plt.title('Hourly Development of Spot Price (DKK)')
+    plt.xlabel('Hour of the Day')
+    plt.ylabel('Spot Price (DKK)')
     plt.legend()
 
     # Adjust layout
@@ -181,18 +279,21 @@ def plot2(merged_df_DK2):
     plt.show()
 
 
+
+
+
 def plot3(merged_df_DK1):
     import matplotlib.pyplot as plt
     import seaborn as sns
 
     # Create a figure and axes with subplots
-    fig, axs = plt.subplots(4, 2, figsize=(12, 16))
+    fig, axs = plt.subplots(5, 2, figsize=(12, 16))
 
     # Set seaborn style
     sns.set_style("whitegrid")
 
     # Define variables
-    variables = ['hourly_temperature_2m', 'precipitation', 'cloud_cover', 'hourly_wind_speed_10m']
+    variables = ['hourly_temperature_2m', 'precipitation', 'cloud_cover', 'hourly_wind_speed_10m', 'SpotPriceDKK']
 
     # Plot line plot on the left and box plot on the right for each variable
     for i, variable in enumerate(variables):
